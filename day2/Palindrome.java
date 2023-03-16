@@ -1,23 +1,15 @@
-package week1.day2;
+package week3.day2;
 
 public class Palindrome {
-	public static void main(String[] args) {
-		int num=34343;
-		int rem=34343;
-		int palin=0;
-		for(int i=rem;rem!=0;rem/=10) {
-		int reverse=rem%10;
-		palin=palin*10+reverse;
+public static void main(String[] args) {
+	String palindrome="madam";
+	String rev="";
+	char[] array = palindrome.toCharArray();
+	for (int i = array.length-1; i >=0 ; i--) {
+		rev+=array[i];
+		System.out.println("Reverse string of madam is "+rev);
 	}
-		System.out.println(palin);
-	if (num==palin) {
-		System.out.println(num+ " is a Palindrome");
-		
-	} 
-	else {
-System.out.println(num+ " is not a palindrome");
-
-	}	
-		
-	}
+		boolean case1 = palindrome.equalsIgnoreCase(rev);
+	System.out.println("The statement 'madam' is a palindrome is "+case1);
+}
 }
