@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite parallel="classes" name="Tests" verbose='2'>
+  <test thread-count="5" parallel="classes" name="Test">
+    <classes>
+      <class name="testcase.Fibonacci"/>
+      <class name="testcase.Palindrome1"/>
+     <class name="testcase.Second"/>
+     <class name="testcase.Prime"/>
+    </classes>
+    
+  </test> <!-- Test -->
+</suite> <!-- Suite -->
