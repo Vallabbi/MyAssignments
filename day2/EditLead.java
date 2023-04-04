@@ -1,36 +1,34 @@
-package week2.day2;
+package week6.day2;
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
 
-public class EditLead {
-
-	public static void main(String[] args) throws InterruptedException {
-		// TODO Auto-generated method stub
-ChromeDriver drive=new ChromeDriver();
-drive.get("http://leaftaps.com/opentaps/control/login");
-drive.manage().window().maximize();
-drive.findElement(By.id("username")).sendKeys("demosalesmanager");
-drive.findElement(By.id("password")).sendKeys("crmsfa");
-drive.findElement(By.className("decorativeSubmit")).click();
-drive.findElement(By.linkText("CRM/SFA")).click();
-drive.findElement(By.linkText("Leads")).click();
-drive.findElement(By.partialLinkText("Find Leads")).click();
-Thread.sleep(2000);
-drive.findElement(By.xpath("(//input[@name='firstName'])[3]")).sendKeys("Vallabbi");
-drive.findElement(By.xpath("//button[text()='Find Leads']")).click();
-Thread.sleep(2000);
-drive.findElement(By.xpath("(//a[text()='Amazon'])[1]")).click();
-String title = drive.getTitle();
-System.out.println(title);
-drive.findElement(By.xpath("//a[text()='Edit']")).click();
-drive.findElement(By.id("updateLeadForm_companyName")).clear();
-drive.findElement(By.id("updateLeadForm_companyName")).sendKeys("Microsoft");
-drive.findElement(By.xpath("//input[@name='submitButton']")).click();
-String title2 = drive.getTitle();
-System.out.println(title2);
-Thread.sleep(5000);
-drive.close();
+public class EditLead extends ProjectSpecificMethod {
+	@BeforeTest
+	public  void setup() {
+	    excelFile="EditLead";
 	}
+@Test(dataProvider="fetchData")
+	public  void editLead(String e1,String e2) throws InterruptedException  {
+		
+		driver.findElement(By.linkText("Find Leads")).click();
+		driver.findElement(By.xpath("//span[text()='Phone']")).click();
+		driver.findElement(By.xpath("//input[@name='phoneNumber']")).sendKeys("e1");
+		driver.findElement(By.xpath("//button[text()='Find Leads']")).click();
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("//div[@class='x-grid3-cell-inner x-grid3-col-partyId']/a")).click();
+		driver.findElement(By.linkText("Edit")).click();
+		driver.findElement(By.id("updateLeadForm_companyName")).sendKeys("e2");
+		driver.findElement(By.name("submitButton")).click();
+		
+}
 
 }
+
+
+
+
+
+
+

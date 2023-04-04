@@ -1,40 +1,44 @@
-package week2.day2;
+package week6.day2;
+
 
 import org.openqa.selenium.By;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.DataProvider;
+import org.testng.annotations.Test;
 
-public class DeleteLead {
-	public static void main(String[] args) throws InterruptedException {
-		ChromeDriver driver=new ChromeDriver();
-		driver.get("http://leaftaps.com/opentaps/control/login");
-		driver.manage().window().maximize();
-		driver.findElement(By.id("username")).sendKeys("demosalesmanager");
-		driver.findElement(By.id("password")).sendKeys("crmsfa");
-		driver.findElement(By.className("decorativeSubmit")).click();
-		driver.findElement(By.linkText("CRM/SFA")).click();
-		driver.findElement(By.linkText("Leads")).click();
-		driver.findElement(By.partialLinkText("Find Leads")).click();
-		Thread.sleep(2000);
+public class DeleteLead extends ProjectSpecificMethod{
+	@BeforeTest
+	public  void setup() {
+	    excelFile="DeleteLead";
+	}
+@Test(dataProvider = "fetchData")
+	public void deleteLead(String d1) throws InterruptedException {
+	
+		driver.findElement(By.linkText("Find Leads")).click();
 		driver.findElement(By.xpath("//span[text()='Phone']")).click();
-		driver.findElement(By.xpath("//input[@name='phoneCountryCode']")).clear();
-		driver.findElement(By.xpath("//input[@name='phoneCountryCode']")).sendKeys("91");
-		driver.findElement(By.xpath("//input[@name='phoneNumber']")).sendKeys("9012345678");
-	driver.findElement(By.xpath("//button[text()='Find Leads']")).click();
-	Thread.sleep(2000);
-	driver.findElement(By.xpath("(//a[@href='/crmsfa/control/viewLead?partyId=15769'])[1]")).click();
-	System.out.println("The captured Id is 15769");
-	driver.findElement(By.xpath("//a[text()='Delete']")).click();
-	driver.findElement(By.partialLinkText("Find Leads")).click();
-	driver.findElement(By.xpath("//input[@name='id']")).sendKeys("15769");
-	driver.findElement(By.xpath("//button[text()='Find Leads']")).click();
-	Thread.sleep(3000);
-	String text = driver.findElement(By.xpath("//div[@class='x-toolbar x-small-editor']")).getText();
-	if (text.contains("No")) {
-		System.out.println("Record not found");
-	} 
-	else {
-		System.out.println("Record is found");
-	}
-	}
+		driver.findElement(By.xpath("//input[@name='phoneNumber']")).sendKeys(d1);
+		driver.findElement(By.xpath("//button[text()='Find Leads']")).click();
+		Thread.sleep(2000);
+		String leadID = driver.findElement(By.xpath("//div[@class='x-grid3-cell-inner x-grid3-col-partyId']/a")).getText();
+		driver.findElement(By.xpath("//div[@class='x-grid3-cell-inner x-grid3-col-partyId']/a")).click();
+		driver.findElement(By.linkText("Delete")).click();
+		driver.findElement(By.linkText("Find Leads")).click();
+		driver.findElement(By.xpath("//input[@name='id']")).sendKeys(leadID);
+		driver.findElement(By.xpath("//button[text()='Find Leads']")).click();
+		String text = driver.findElement(By.className("x-paging-info")).getText();
+		if (text.equals("No records to display")) {
+			System.out.println("Text matched");
+		} else {
+			System.out.println("Text not matched");
+		}
+		
+}
+
 
 }
+
+
+
+
+
+
